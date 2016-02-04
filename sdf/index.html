@@ -1,0 +1,349 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Building Java Projects with Gradle</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=e3ba9e25d0">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="origin">
+    
+    <meta property="og:site_name" content="Eddie's Learning Journal ">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Building Java Projects with Gradle">
+    <meta property="og:description" content="What is Gradle? Gradle is a build automation systemn that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL) instead of the XML form used by Apache Maven of declaring the project...">
+    <meta property="og:url" content="http://localhost:2368/sdf/">
+    <meta property="article:published_time" content="2016-01-28T22:42:44.957Z">
+    <meta property="article:modified_time" content="2016-02-04T15:28:48.954Z">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Building Java Projects with Gradle">
+    <meta name="twitter:description" content="What is Gradle? Gradle is a build automation systemn that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL) instead of the XML form used by Apache Maven of declaring the project...">
+    <meta name="twitter:url" content="http://localhost:2368/sdf/">
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Eddie's Learning Journal ",
+    "author": {
+        "@type": "Person",
+        "name": "Eduardo Lima",
+        "url": "http://localhost:2368/author/eduardo",
+        "sameAs": null,
+        "description": null
+    },
+    "headline": "Building Java Projects with Gradle",
+    "url": "http://localhost:2368/sdf/",
+    "datePublished": "2016-01-28T22:42:44.957Z",
+    "dateModified": "2016-02-04T15:28:48.954Z",
+    "description": "What is Gradle? Gradle is a build automation systemn that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL) instead of the XML form used by Apache Maven of declaring the project..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.7">
+    <link rel="alternate" type="application/rss+xml" title="Eddie's Learning Journal " href="../rss/index.html">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home" role="presentation"><a href="../">Home</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="../rss/index.rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header post-head no-cover">
+    <nav class="main-nav  clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <h1 class="post-title">Building Java Projects with Gradle</h1>
+            <section class="post-meta">
+                <time class="post-date" datetime="2016-01-28">28 January 2016</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <h4 id="whatisgradle">What is Gradle?</h4>
+
+<p>Gradle is a build automation systemn that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL) instead of the XML form used by Apache Maven of declaring the project configuration.</p>
+
+<p><strong>Interesting fact about Gradle's importance:</strong> <em>Google adopted Gradle as the default build tool for the Android OS.</em></p>
+
+<h4 id="setuptheproject">Set up the project</h4>
+
+<p>Create the following subdirectory structure:</p>
+
+<pre><code class="language-python">└── src
+    └── main
+        └── java
+            └── hello
+</code></pre>
+
+<p>Create two classes <em>HelloWorld.java</em> and <em>Greeter.java</em></p>
+
+<p><em>HelloWorld.java</em></p>
+
+<pre><code class="language-python">package hello;
+
+public class HelloWorld {  
+  public static void main(String[] args) {
+    Greeter greeter = new Greeter();
+    System.out.println(greeter.sayHello());
+  }
+}
+</code></pre>
+
+<p><em>Greeter.java</em></p>
+
+<pre><code class="language-python">package hello;
+
+public class Greeter {  
+  public String sayHello() {
+    return "Hello world!";
+  }
+}
+</code></pre>
+
+<h4 id="installinggradle">Installing Gradle</h4>
+
+<p>Download Gradle from: <a href="http://www.gradle.org/downloads">http://www.gradle.org/downloads</a></p>
+
+<p>Unzip the file to your computer, and add the bin folder to your path</p>
+
+<p>Test Gradle</p>
+
+<pre><code class="language-python"> gradle
+</code></pre>
+
+<p>If the installation was successful you should see the welcome message:</p>
+
+<pre><code class="language-python">:help
+
+Welcome to Gradle 2.3.
+
+To run a build, run gradle &lt;task&gt; ...
+
+To see a list of available tasks, run gradle tasks
+
+To see a list of command-line options, run gradle --help
+
+BUILD SUCCESSFUL
+
+Total time: 2.675 secs  
+</code></pre>
+
+<h4 id="findoutwhatgradlecando">Find out what Gradle can do</h4>
+
+<p>The below command will give u a list of tasks that gradle can do.</p>
+
+<pre><code class="language-python">gradle tasks  
+</code></pre>
+
+<p>You should see a list of available tasks. Assuming that you run Gradle on a folder that doesn't already have a build.gradle file</p>
+
+<pre><code class="language-python">:tasks
+
+== All tasks runnable from root project
+
+== Build Setup tasks
+setupBuild - Initializes a new Gradle build. [incubating]  
+wrapper - Generates Gradle wrapper files. [incubating]
+
+== Help tasks
+dependencies - Displays all dependencies declared in root project 'gs-gradle'.  
+dependencyInsight - Displays the insight into a specific dependency in root project 'gs-gradle'.  
+help - Displays a help message  
+projects - Displays the sub-projects of root project 'gs-gradle'.  
+properties - Displays the properties of root project 'gs-gradle'.  
+tasks - Displays the tasks runnable from root project 'gs-gradle'.
+
+To see all tasks and more detail, run with --all.
+
+BUILD SUCCESSFUL
+
+Total time: 3.077 secs  
+</code></pre>
+
+<h4 id="buildjavacodeplugins">Build Java Code (Plugins)</h4>
+
+<p>Inside of your project root folder create a build.gradle file and add the following line:</p>
+
+<pre><code class="language-python">apply plugin: 'java'  
+</code></pre>
+
+<p>This plugin enables Java build functionalities. </p>
+
+<h4 id="gradlebuildtask">Gradle build task</h4>
+
+<p>This task is used frequently to compile, test, and assemble the code into a JAR file. The results of this task can be found in the build folder.</p>
+
+<h6 id="declaredependencies">Declare dependencies</h6>
+
+<p>Modify the <em>HelloWorld.java</em> class and add the following code in order to import the <em>Joda Time</em> library.</p>
+
+<pre><code class="language-python">Import the library: import org.joda.time.LocalTime;
+
+Create the object: LocalTime currentTime = new LocalTime();
+
+Print the current time: System.out.println("The current time is " + currentTime);  
+</code></pre>
+
+<p>After making the above changes we need to make the <em>Joda Time</em> library as a compile dependency in the build.</p>
+
+<p>Add the repositories block to the <em>build.gradle</em> file as shown below:</p>
+
+<pre><code class="language-python">repositories {  
+    mavenCentral()
+}
+</code></pre>
+
+<p>The repositories block indicate that the build should resolve its dependencies from the Maven Central repository. </p>
+
+<h6 id="declaring3rdpartylibraries">Declaring 3rd party libraries</h6>
+
+<pre><code class="language-python">sourceCompatibility = 1.8  
+targetCompatibility = 1.8
+
+dependencies {  
+    compile "joda-time:joda-time:2.2"
+}
+</code></pre>
+
+<p>The Joda Time is a compile dependency and should be available during compile-time. </p>
+
+<p>Other types of dependency:</p>
+
+<p><strong>providedCompile:</strong> <em>Required dependencies for compiling the project code, but that will be provided at runtime by a container running the code (for example, the Java Servlet API).</em></p>
+
+<p><strong>testCompile:</strong> <em>Dependencies used for compiling and running tests, but not required for building or running the project’s runtime code.</em></p>
+
+<p>Specify the name of the JAR artifact</p>
+
+<pre><code class="language-python">jar {  
+ baseName = 'gs-gladle'
+ version = '0.1.0'
+}
+</code></pre>
+
+<h5 id="buildyourprojectwithgradlewrapper">Build your project with Gradle Wrapper</h5>
+
+<p>The Gradle wrapper in the perfect way to starting a Gradle build. It is a bash script for Windows and a shell for OS S and Linux. This allows you to run Gradle build without requiring Gradle to be installed in your system. Add the following code to your build.gradle</p>
+
+<pre><code class="language-python">task wrapper(type: Wrapper) {  
+    gradleVersion = '2.3'
+}
+</code></pre>
+
+<p>Download and initialise the wrapper scripts:</p>
+
+<pre><code class="language-python">gradle wrapper  
+</code></pre>
+
+<p>The Gradle Wrapper is now available for bulding your project. Add it to your version control system (GitHub) and everyone that clones your project can build. </p>
+
+<p>Run the wrapper script to perform the build task:</p>
+
+<pre><code class="language-python">./gradlew build
+</code></pre>
+
+<h5 id="makethecoderunnable">Make the code runnable</h5>
+
+<p>Add the following plugin to your build.gradle file and declare the main class name.</p>
+
+<pre><code class="language-python">apply plugin: 'application'
+
+mainClassName = 'hello.HelloWorld'  
+</code></pre>
+
+<p>Run the app</p>
+
+<pre><code class="language-python">./gradlew run
+</code></pre>
+        </section>
+
+        <footer class="post-footer">
+
+
+
+            <section class="author">
+                <h4><a href="../author/eduardo/">Eduardo Lima</a></h4>
+
+                    <p>Read <a href="../author/eduardo/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Building%20Java%20Projects%20with%20Gradle&amp;url=http://localhost:2368/sdf/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/sdf/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:2368/sdf/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+    <a class="read-next-story prev no-cover" href="../welcome-to-ghost/">
+        <section class="post">
+            <h2>Welcome to Ghost</h2>
+            <p>You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you…</p>
+        </section>
+    </a>
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">Eddie's Learning Journal </a> © 2016</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
+
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=e3ba9e25d0"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=e3ba9e25d0"></script>
+
+</body>

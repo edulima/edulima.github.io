@@ -1,0 +1,265 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Eddie's Learning Journal </title><description>Thoughts, stories and ideas.</description><link>http://localhost:2368/</link><generator>Ghost 0.7</generator><lastBuildDate>Thu, 04 Feb 2016 16:16:45 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Building Java Projects with Gradle</title><description>&lt;h4 id="whatisgradle"&gt;What is Gradle?&lt;/h4&gt;
+
+&lt;p&gt;Gradle is a build automation systemn that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL) instead of the XML form used by Apache Maven of declaring the project configuration.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Interesting fact about Gradle's importance:&lt;/strong&gt; &lt;em&gt;Google adopted Gradle as&lt;/em&gt;&lt;/p&gt;</description><link>http://localhost:2368/sdf/</link><guid isPermaLink="false">18e17c2a-be1f-4d82-a863-f54f108c2563</guid><dc:creator>Eduardo Lima</dc:creator><pubDate>Thu, 28 Jan 2016 22:42:44 GMT</pubDate><content:encoded>&lt;h4 id="whatisgradle"&gt;What is Gradle?&lt;/h4&gt;
+
+&lt;p&gt;Gradle is a build automation systemn that builds upon the concepts of Apache Ant and Apache Maven and introduces a Groovy-based domain-specific language (DSL) instead of the XML form used by Apache Maven of declaring the project configuration.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Interesting fact about Gradle's importance:&lt;/strong&gt; &lt;em&gt;Google adopted Gradle as the default build tool for the Android OS.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h4 id="setuptheproject"&gt;Set up the project&lt;/h4&gt;
+
+&lt;p&gt;Create the following subdirectory structure:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;└── src
+    └── main
+        └── java
+            └── hello
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create two classes &lt;em&gt;HelloWorld.java&lt;/em&gt; and &lt;em&gt;Greeter.java&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;HelloWorld.java&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;package hello;
+
+public class HelloWorld {  
+  public static void main(String[] args) {
+    Greeter greeter = new Greeter();
+    System.out.println(greeter.sayHello());
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;em&gt;Greeter.java&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;package hello;
+
+public class Greeter {  
+  public String sayHello() {
+    return "Hello world!";
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id="installinggradle"&gt;Installing Gradle&lt;/h4&gt;
+
+&lt;p&gt;Download Gradle from: &lt;a href="http://www.gradle.org/downloads"&gt;http://www.gradle.org/downloads&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Unzip the file to your computer, and add the bin folder to your path&lt;/p&gt;
+
+&lt;p&gt;Test Gradle&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt; gradle
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the installation was successful you should see the welcome message:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;:help
+
+Welcome to Gradle 2.3.
+
+To run a build, run gradle &amp;lt;task&amp;gt; ...
+
+To see a list of available tasks, run gradle tasks
+
+To see a list of command-line options, run gradle --help
+
+BUILD SUCCESSFUL
+
+Total time: 2.675 secs  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id="findoutwhatgradlecando"&gt;Find out what Gradle can do&lt;/h4&gt;
+
+&lt;p&gt;The below command will give u a list of tasks that gradle can do.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;gradle tasks  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You should see a list of available tasks. Assuming that you run Gradle on a folder that doesn't already have a build.gradle file&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;:tasks
+
+== All tasks runnable from root project
+
+== Build Setup tasks
+setupBuild - Initializes a new Gradle build. [incubating]  
+wrapper - Generates Gradle wrapper files. [incubating]
+
+== Help tasks
+dependencies - Displays all dependencies declared in root project 'gs-gradle'.  
+dependencyInsight - Displays the insight into a specific dependency in root project 'gs-gradle'.  
+help - Displays a help message  
+projects - Displays the sub-projects of root project 'gs-gradle'.  
+properties - Displays the properties of root project 'gs-gradle'.  
+tasks - Displays the tasks runnable from root project 'gs-gradle'.
+
+To see all tasks and more detail, run with --all.
+
+BUILD SUCCESSFUL
+
+Total time: 3.077 secs  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id="buildjavacodeplugins"&gt;Build Java Code (Plugins)&lt;/h4&gt;
+
+&lt;p&gt;Inside of your project root folder create a build.gradle file and add the following line:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;apply plugin: 'java'  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This plugin enables Java build functionalities. &lt;/p&gt;
+
+&lt;h4 id="gradlebuildtask"&gt;Gradle build task&lt;/h4&gt;
+
+&lt;p&gt;This task is used frequently to compile, test, and assemble the code into a JAR file. The results of this task can be found in the build folder.&lt;/p&gt;
+
+&lt;h6 id="declaredependencies"&gt;Declare dependencies&lt;/h6&gt;
+
+&lt;p&gt;Modify the &lt;em&gt;HelloWorld.java&lt;/em&gt; class and add the following code in order to import the &lt;em&gt;Joda Time&lt;/em&gt; library.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;Import the library: import org.joda.time.LocalTime;
+
+Create the object: LocalTime currentTime = new LocalTime();
+
+Print the current time: System.out.println("The current time is " + currentTime);  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After making the above changes we need to make the &lt;em&gt;Joda Time&lt;/em&gt; library as a compile dependency in the build.&lt;/p&gt;
+
+&lt;p&gt;Add the repositories block to the &lt;em&gt;build.gradle&lt;/em&gt; file as shown below:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;repositories {  
+    mavenCentral()
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The repositories block indicate that the build should resolve its dependencies from the Maven Central repository. &lt;/p&gt;
+
+&lt;h6 id="declaring3rdpartylibraries"&gt;Declaring 3rd party libraries&lt;/h6&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;sourceCompatibility = 1.8  
+targetCompatibility = 1.8
+
+dependencies {  
+    compile "joda-time:joda-time:2.2"
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Joda Time is a compile dependency and should be available during compile-time. &lt;/p&gt;
+
+&lt;p&gt;Other types of dependency:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;providedCompile:&lt;/strong&gt; &lt;em&gt;Required dependencies for compiling the project code, but that will be provided at runtime by a container running the code (for example, the Java Servlet API).&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;testCompile:&lt;/strong&gt; &lt;em&gt;Dependencies used for compiling and running tests, but not required for building or running the project’s runtime code.&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;Specify the name of the JAR artifact&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;jar {  
+ baseName = 'gs-gladle'
+ version = '0.1.0'
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id="buildyourprojectwithgradlewrapper"&gt;Build your project with Gradle Wrapper&lt;/h5&gt;
+
+&lt;p&gt;The Gradle wrapper in the perfect way to starting a Gradle build. It is a bash script for Windows and a shell for OS S and Linux. This allows you to run Gradle build without requiring Gradle to be installed in your system. Add the following code to your build.gradle&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;task wrapper(type: Wrapper) {  
+    gradleVersion = '2.3'
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Download and initialise the wrapper scripts:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;gradle wrapper  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The Gradle Wrapper is now available for bulding your project. Add it to your version control system (GitHub) and everyone that clones your project can build. &lt;/p&gt;
+
+&lt;p&gt;Run the wrapper script to perform the build task:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;./gradlew build
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h5 id="makethecoderunnable"&gt;Make the code runnable&lt;/h5&gt;
+
+&lt;p&gt;Add the following plugin to your build.gradle file and declare the main class name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;apply plugin: 'application'
+
+mainClassName = 'hello.HelloWorld'  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Run the app&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language-python"&gt;./gradlew run
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title>Welcome to Ghost</title><description>&lt;p&gt;You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you started. You can manage your content by signing in to the admin area at &lt;code&gt;&amp;lt;your blog URL&amp;gt;/ghost/&lt;/code&gt;. When you arrive, you can select this post from a list&lt;/p&gt;</description><link>http://localhost:2368/welcome-to-ghost/</link><guid isPermaLink="false">ce680782-7742-424f-ae6d-d3a01c1c348b</guid><category>Getting Started</category><dc:creator>Eduardo Lima</dc:creator><pubDate>Thu, 28 Jan 2016 22:23:21 GMT</pubDate><content:encoded>&lt;p&gt;You're live! Nice. We've put together a little post to introduce you to the Ghost editor and get you started. You can manage your content by signing in to the admin area at &lt;code&gt;&amp;lt;your blog URL&amp;gt;/ghost/&lt;/code&gt;. When you arrive, you can select this post from a list on the left and see a preview of it on the right. Click the little pencil icon at the top of the preview to edit this post and read the next section!&lt;/p&gt;
+
+&lt;h2 id="gettingstarted"&gt;Getting Started&lt;/h2&gt;
+
+&lt;p&gt;Ghost uses something called Markdown for writing. Essentially, it's a shorthand way to manage your post formatting as you write!&lt;/p&gt;
+
+&lt;p&gt;Writing in Markdown is really easy. In the left hand panel of Ghost, you simply write as you normally would. Where appropriate, you can use &lt;em&gt;shortcuts&lt;/em&gt; to &lt;strong&gt;style&lt;/strong&gt; your content. For example, a list:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Item number one&lt;/li&gt;
+&lt;li&gt;Item number two
+&lt;ul&gt;&lt;li&gt;A nested item&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;A final item&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;or with numbers!&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Remember to buy some milk  &lt;/li&gt;
+&lt;li&gt;Drink the milk  &lt;/li&gt;
+&lt;li&gt;Tweet that I remembered to buy the milk, and drank it&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id="links"&gt;Links&lt;/h3&gt;
+
+&lt;p&gt;Want to link to a source? No problem. If you paste in a URL, like &lt;a href="http://ghost.org"&gt;http://ghost.org&lt;/a&gt; - it'll automatically be linked up. But if you want to customise your anchor text, you can do that too! Here's a link to &lt;a href="http://ghost.org"&gt;the Ghost website&lt;/a&gt;. Neat.&lt;/p&gt;
+
+&lt;h3 id="whataboutimages"&gt;What about Images?&lt;/h3&gt;
+
+&lt;p&gt;Images work too! Already know the URL of the image you want to include in your article? Simply paste it in like this to make it show up:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="https://ghost.org/images/ghost.png" alt="The Ghost Logo"&gt;&lt;/p&gt;
+
+&lt;p&gt;Not sure which image you want to use yet? That's ok too. Leave yourself a descriptive placeholder and keep writing. Come back later and drag and drop the image in to upload:&lt;/p&gt;
+
+&lt;h3 id="quoting"&gt;Quoting&lt;/h3&gt;
+
+&lt;p&gt;Sometimes a link isn't enough, you want to quote someone on what they've said. Perhaps you've started using a new blogging platform and feel the sudden urge to share their slogan? A quote might be just the way to do it!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Ghost - Just a blogging platform&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id="workingwithcode"&gt;Working with Code&lt;/h3&gt;
+
+&lt;p&gt;Got a streak of geek? We've got you covered there, too. You can write inline &lt;code&gt;&amp;lt;code&amp;gt;&lt;/code&gt; blocks really easily with back ticks. Want to show off something more comprehensive? 4 spaces of indentation gets you there.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;.awesome-thing {
+    display: block;
+    width: 100%;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id="readyforabreak"&gt;Ready for a Break?&lt;/h3&gt;
+
+&lt;p&gt;Throw 3 or more dashes down on any new line and you've got yourself a fancy new divider. Aw yeah.&lt;/p&gt;
+
+&lt;hr&gt;
+
+&lt;h3 id="advancedusage"&gt;Advanced Usage&lt;/h3&gt;
+
+&lt;p&gt;There's one fantastic secret about Markdown. If you want, you can write plain old HTML and it'll still work! Very flexible.&lt;/p&gt;
+
+&lt;p&gt;&lt;input type="text" placeholder="I'm an input field!"&gt;&lt;/p&gt;
+
+&lt;p&gt;That should be enough to get you started. Have fun - and let us know what you think :)&lt;/p&gt;</content:encoded></item></channel></rss>
